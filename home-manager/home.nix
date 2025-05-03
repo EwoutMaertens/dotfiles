@@ -16,6 +16,7 @@
     tmux
     zsh
     vscode
+    inkscape
   ];
 
   home.file = {
@@ -202,6 +203,7 @@
       source ${dotfiles}/zsh/theme/p10k.zsh
       source ${dotfiles}/zsh/aliases.zsh
       source ${dotfiles}/zsh/paths.zsh
+      source ${dotfiles}/zsh/env_vars.zsh
     '';
   };
 }
