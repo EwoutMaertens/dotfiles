@@ -16,7 +16,6 @@
     tmux
     zsh
     vscode
-    inkscape
   ];
 
   home.file = {
