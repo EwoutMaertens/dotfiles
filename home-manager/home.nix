@@ -1,6 +1,18 @@
 { lib, config, pkgs, dotfiles, ... }:
 
 {
+  # Make sure to load Nix system wide env + load hm session variables
+  home.file.".zprofile".text = ''
+    if [ -e /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]; then
+      . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+    fi
+
+    if [ -e "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh" ]; then
+      source "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
+    fi
+  '';
+
+
   nixpkgs.config.allowUnfreePredicate = pkg:
     builtins.elem (lib.getName pkg) [
       "vscode"
@@ -13,15 +25,22 @@
   home.packages = with pkgs; [
     kitty
     fzy
+    zellij
     tmux
     zsh
     vscode
+    (pkgs.python313.withPackages (p: with p; [
+      virtualenv
+      requests
+    ]))
+    p4
   ];
 
   home.file = {
-    ".config/kitty".source = "${dotfiles}/kitty";
-    ".config/tmux".source  = "${dotfiles}/tmux";
-    ".config/nvim".source  = "${dotfiles}/nvim";
+    ".config/kitty".source  = "${dotfiles}/kitty";
+    ".config/tmux".source   = "${dotfiles}/tmux";
+    ".config/nvim".source   = "${dotfiles}/nvim";
+    ".config/zellij".source = "${dotfiles}/zellij";
   };
 
   home.sessionVariables = {
