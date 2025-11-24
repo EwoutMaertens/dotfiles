@@ -16,7 +16,7 @@ support_kitty_keyboard_protocol false
 // Layout
 default_layout "ewout_layout"
 //layout_dir "./layouts"
-auto_layout true
+auto_layout false
 
 // Theme
 theme "ao" //ao, stopped at everforest-dark

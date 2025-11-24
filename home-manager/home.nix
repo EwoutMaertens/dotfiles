@@ -25,8 +25,6 @@
   home.packages = with pkgs; [
     kitty
     fzy
-    zellij
-    tmux
     zsh
     vscode
     (pkgs.python313.withPackages (p: with p; [
@@ -34,11 +32,12 @@
       requests
     ]))
     p4
+    zellij
+    nodejs
   ];
 
   home.file = {
     ".config/kitty".source  = "${dotfiles}/kitty";
-    ".config/tmux".source   = "${dotfiles}/tmux";
     ".config/nvim".source   = "${dotfiles}/nvim";
     ".config/zellij".source = "${dotfiles}/zellij";
   };
@@ -151,22 +150,8 @@
        ];
   };
 
-  programs.tmux = {
-       enable = true;
-       keyMode = "vi";
-       # extraConfig = builtins.readFile dotfiles + "/tmux/tmux.conf";
-       plugins = with pkgs.tmuxPlugins; [
-         sensible # sane tmux defaults
-         sessionist # makes sessions management that bit easier
-         pain-control # edit tmux panes with ease
-         vim-tmux-navigator # naviagate into vim panes with ease
-         resurrect # resume tmux session when system restarts
-         continuum # routinely saves the tmux state
-         copycat # nifty predefined searches
-         tmux-fzf
-         # logging
-         # tmuxinator
-       ];
+  programs.zellij = {
+    enable = true;
   };
 
   programs.zsh = {
@@ -210,10 +195,6 @@
 	  caseSensitive = false;
       prompt = {
         theme = "powerlevel10k";
-      };
-      tmux = {
-        autoStartRemote = true;
-        autoStartLocal = true;
       };
     };
     initContent = ''

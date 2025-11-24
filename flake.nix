@@ -18,7 +18,7 @@
         inherit pkgs;
         modules = [ ./home-manager/home.nix ];
         extraSpecialArgs = {
-          dotfiles = self; # will be used as dotfiles path
+          dotfiles = self;
         };
       };
     };
