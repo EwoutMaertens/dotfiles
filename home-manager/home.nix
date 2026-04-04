@@ -49,7 +49,7 @@
     kubernetes-helm
     maven
     nodejs
-    openjdk11
+    (lib.meta.lowPrio openjdk11)
     openjdk17
     yarn
 
@@ -76,16 +76,17 @@
 
   programs.git = {
     enable = true;
-    aliases = {
-      co = "checkout";
-      br = "branch";
-      ci = "commit";
-      st = "status";
-      unstage = "reset HEAD --";
-      last = "log -1 HEAD";
-      aliases = "config --get-regexp ^alias";
-    };
-    extraConfig = {
+    signing.format = "openpgp";
+    settings = {
+      alias = {
+        co = "checkout";
+        br = "branch";
+        ci = "commit";
+        st = "status";
+        unstage = "reset HEAD --";
+        last = "log -1 HEAD";
+        aliases = "config --get-regexp ^alias";
+      };
       core.editor = "nvim";
       push.default = "nothing";
       filter.lfs = {
