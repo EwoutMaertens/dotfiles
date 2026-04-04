@@ -33,13 +33,13 @@
     ]))
     p4
     zellij
-    nodejs
   ];
 
   home.file = {
     ".config/kitty".source  = "${dotfiles}/kitty";
     ".config/nvim".source   = "${dotfiles}/nvim";
     ".config/zellij".source = "${dotfiles}/zellij";
+    ".config/zsh".source    = "${dotfiles}/zsh";
   };
 
   home.sessionVariables = {
@@ -203,6 +203,7 @@
       source ${dotfiles}/zsh/aliases.zsh
       source ${dotfiles}/zsh/paths.zsh
       source ${dotfiles}/zsh/env_vars.zsh
+      [[ -f ${dotfiles}/zsh/env_vars.local.zsh ]] && source ${dotfiles}/zsh/env_vars.local.zsh
     '';
   };
 }

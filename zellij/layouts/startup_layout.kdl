@@ -26,7 +26,7 @@ layout {
   }
 
 
-  tab name="project-1" split_direction="vertical" cwd="~/Projects/project-1" {
+  tab name="project-1" split_direction="vertical" cwd="~/Projects/project-1/" {
     pane close_on_exit=true {
       command "zsh"
     }
@@ -35,7 +35,7 @@ layout {
     }
   }
 
-  tab name="project-2" split_direction="vertical" cwd="~/Projects/project-2" {
+  tab name="project-2" split_direction="vertical" cwd="~/Projects/project-2/" {
     pane close_on_exit=true {
       command "zsh"
     }
