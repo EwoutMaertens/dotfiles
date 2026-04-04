@@ -11,16 +11,54 @@
   home.stateVersion = "24.11";
 
   home.packages = with pkgs; [
+    # terminal & shell
     kitty
-    fzy
     zsh
+    zellij
+    tmux
+
+    # CLI tools
+    curl
+    fd
+    fzf
+    fzy
+    gnupg
+    jq
+    nmap
+    rename
+    ripgrep
+    socat
+    inetutils
+    tree
+    watch
+    wget
+    xclip
+    yq
+
+    # editors & IDE
     vscode
+
+    # dev tools
+    ansible
+    bazel
+    docker-buildx
+    gcc
+    git-lfs
+    gnumake
+    go
+    kubernetes-helm
+    maven
+    nodejs
+    openjdk11
+    openjdk17
+    yarn
+
+    # languages
     (pkgs.python313.withPackages (p: with p; [
       virtualenv
       requests
     ]))
     p4
-    zellij
   ];
 
   home.file = {
@@ -35,6 +73,33 @@
   };
 
   programs.home-manager.enable = true;
+
+  programs.git = {
+    enable = true;
+    aliases = {
+      co = "checkout";
+      br = "branch";
+      ci = "commit";
+      st = "status";
+      unstage = "reset HEAD --";
+      last = "log -1 HEAD";
+      aliases = "config --get-regexp ^alias";
+    };
+    extraConfig = {
+      core.editor = "nvim";
+      push.default = "nothing";
+      filter.lfs = {
+        smudge = "git-lfs smudge -- %f";
+        process = "git-lfs filter-process";
+        required = true;
+        clean = "git-lfs clean -- %f";
+      };
+      lfs.allow = 1;
+    };
+    includes = [
+      { path = "~/.config/git/config.local"; }
+    ];
+  };
 
   programs.neovim = {
     enable = true;

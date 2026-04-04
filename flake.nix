@@ -14,6 +14,8 @@
       system = "aarch64-darwin";
       pkgs = nixpkgs.legacyPackages.${system};
     in {
+      formatter.${system} = pkgs.nixfmt-rfc-style;
+
       homeConfigurations."ewoutm" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         modules = [ ./home-manager/home.nix ];
