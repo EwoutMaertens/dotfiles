@@ -1,18 +1,6 @@
-{ lib, config, pkgs, dotfiles, ... }:
+{ lib, pkgs, dotfiles, ... }:
 
 {
-  # Make sure to load Nix system wide env + load hm session variables
-  home.file.".zprofile".text = ''
-    if [ -e /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]; then
-      . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
-    fi
-
-    if [ -e "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh" ]; then
-      source "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
-    fi
-  '';
-
-
   nixpkgs.config.allowUnfreePredicate = pkg:
     builtins.elem (lib.getName pkg) [
       "vscode"
@@ -49,115 +37,107 @@
   programs.home-manager.enable = true;
 
   programs.neovim = {
-      enable = true;
-       vimAlias = true;
-       plugins = with pkgs.vimPlugins; [
-
-         # appearence
-          gruvbox-community   # colorscheme
-          sonokai
-          galaxyline-nvim     # add a nice status bar
-          nvim-web-devicons   # add some nice icons, makes things a bit prettier
-          vim-startify        # nice startup screen with MRU files
-          vim-lastplace       # open file on last place the cursor was
-          vim-signature
-          scrollbar-nvim
-          hiPairs
-          Shade-nvim
-
-         # source control
-          gitsigns-nvim # add source control symbols to the gutter and enable hunk jumping
-          vim-fugitive
-          git-messenger-vim
-          committia-vim
-          vim-twiggy
-          vista-vim
-
-         # text formatting
-          comment-nvim
-          # nvim-ts-context-commentstring
-          vim-exchange        # swap text objects
-          vim-sandwich        # add/chanfe/remove {[("' around text objects
-          vim-matchup         # matchit++
-          vim-sleuth          # automatically figure out indentation from similar files
-          sideways-vim        # easy weapping of params/items in lists
-          vim-after-object    # Defines text objects to target text after the designated characters.
-          nvim-autopairs
-
-         # vim-endwise         # ends certain structures automatically (if,functions etc) */
-
-         # prog langs
-          vim-go              # official go program
-          vim-nix
-
-         # utilities
-          which-key-nvim
-          fzf-vim             # fzf functionality in vim
-          vim-smoothie        # smooth scrolling
-          vim-unimpaired      # nicer mapping
-          undotree            # saves undo history, TODO: look into yank history outside of 1-9
-          bclose-vim          # close buffers in a smart way, TODO: maybe look into buffer searcher
-          vim-peekaboo
-          vimspector
-          # devdocs-vim
-          vim-tmux-navigator
-          barbar-nvim
-
-          vim-repeat
-          vim-eunuch
-         # LanguageTool-nvim
-
-         # telescope plins
-          telescope-nvim
-          popup-nvim
-          plenary-nvim
-
-         # treesitter plugins
-          # nvim-treesitter
-          # nvim-ts-rainbow
-          # nvim-treesitter-refactor
-          # nvim-treesitter-textobjects
-
-         # LSP plugins
-          nvim-lspconfig
-          # nvim-lsp-installer
-          lspsaga-nvim
-          lsp_signature-nvim
-
-         # completion plugins
-          nvim-cmp
-          cmp-buffer
-          cmp-path
-          cmp-cmdline
-          cmp_luasnip
-          cmp-nvim-lsp
-          cmp-nvim-lua
-
-          # snippets
-          luasnip
-          friendly-snippets
-
-          # debugging plugins
-          nvim-dap
-          nvim-dap-virtual-text
-          nvim-dap-ui
-          telescope-dap-nvim
-          vim-test
-
-          vimux
-          nvim-tree-lua
-        # TODO: maybe look into a mark plugin, vim-peekaboo or something alike.
-       ];
-  };
-
-  programs.zellij = {
     enable = true;
+    vimAlias = true;
+    plugins = with pkgs.vimPlugins; [
+
+      # appearence
+      gruvbox-community
+      sonokai
+      galaxyline-nvim
+      nvim-web-devicons
+      vim-startify
+      vim-lastplace
+      vim-signature
+      scrollbar-nvim
+      hiPairs
+      Shade-nvim
+
+      # source control
+      gitsigns-nvim
+      vim-fugitive
+      git-messenger-vim
+      committia-vim
+      vim-twiggy
+      vista-vim
+
+      # text formatting
+      comment-nvim
+      vim-exchange
+      vim-sandwich
+      vim-matchup
+      vim-sleuth
+      sideways-vim
+      vim-after-object
+      nvim-autopairs
+
+      # prog langs
+      vim-go
+      vim-nix
+
+      # utilities
+      which-key-nvim
+      fzf-vim
+      vim-smoothie
+      vim-unimpaired
+      undotree
+      bclose-vim
+      vim-peekaboo
+      vimspector
+      vim-tmux-navigator
+      barbar-nvim
+      vim-repeat
+      vim-eunuch
+
+      # telescope
+      telescope-nvim
+      popup-nvim
+      plenary-nvim
+
+      # LSP
+      nvim-lspconfig
+      lspsaga-nvim
+      lsp_signature-nvim
+
+      # completion
+      nvim-cmp
+      cmp-buffer
+      cmp-path
+      cmp-cmdline
+      cmp_luasnip
+      cmp-nvim-lsp
+      cmp-nvim-lua
+
+      # snippets
+      luasnip
+      friendly-snippets
+
+      # debugging
+      nvim-dap
+      nvim-dap-virtual-text
+      nvim-dap-ui
+      telescope-dap-nvim
+      vim-test
+
+      vimux
+      nvim-tree-lua
+    ];
   };
 
   programs.zsh = {
     enable = true;
     enableCompletion = true;
     autosuggestion.enable = true;
+
+    profileExtra = ''
+      if [ -e /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]; then
+        . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+      fi
+
+      if [ -e "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh" ]; then
+        source "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
+      fi
+    '';
 
     plugins = with pkgs; [
       {
@@ -191,8 +171,8 @@
       }
     ];
     prezto = {
-	  enable = true;
-	  caseSensitive = false;
+      enable = true;
+      caseSensitive = false;
       prompt = {
         theme = "powerlevel10k";
       };
