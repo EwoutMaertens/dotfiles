@@ -1,25 +1,50 @@
 local remove_background = function()
-  -- The `vim.api.nvim_set_hl` function sets a highlight group.
-  -- The `bg = "none"` part removes the background color.
+  local groups = {
+    -- core editor
+    "Normal",
+    "NormalNC",
+    "NormalFloat",
+    "NonText",
+    "SignColumn",
+    "EndOfBuffer",
 
-  -- The main editor background
-  vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+    -- floating windows & borders
+    "FloatBorder",
+    "FloatTitle",
 
-  -- Background for floating windows (e.g., LSP popups, find and replace)
-  vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+    -- telescope
+    "TelescopeNormal",
+    "TelescopeBorder",
+    "TelescopePromptNormal",
+    "TelescopePromptBorder",
+    "TelescopeResultsNormal",
+    "TelescopeResultsBorder",
+    "TelescopePreviewNormal",
+    "TelescopePreviewBorder",
 
-  -- Background for UI elements like sign columns and non-text areas
-  vim.api.nvim_set_hl(0, "NonText", { bg = "none" })
-  vim.api.nvim_set_hl(0, "SignColumn", { bg = "none" })
+    -- neo-tree
+    "NeoTreeNormal",
+    "NeoTreeNormalNC",
+    "NeoTreeEndOfBuffer",
 
-  -- This can be useful for plugins like `nvim-tree`
-  vim.api.nvim_set_hl(0, "NvimTreeNormal", { bg = "none" })
+    -- sidebar / split backgrounds
+    "StatusLine",
+    "StatusLineNC",
+    "WinSeparator",
+
+    -- notify / noice popups
+    "NotifyBackground",
+    "NoicePopup",
+    "NoiceCmdlinePopup",
+  }
+
+  for _, group in ipairs(groups) do
+    vim.api.nvim_set_hl(0, group, { bg = "none" })
+  end
 end
 
--- Create an autocommand to run the function whenever a colorscheme is loaded.
 vim.api.nvim_create_autocmd("ColorScheme", {
   callback = remove_background,
 })
 
--- Call it once on startup, in case the colorscheme is loaded before the autocommand.
 remove_background()
