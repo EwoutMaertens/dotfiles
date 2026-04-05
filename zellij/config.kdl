@@ -52,9 +52,9 @@ ui {
 
 // Serialization
 session_serialization true
-serialize_pane_viewport false
-scrollback_lines_to_serialize 0
-serialization_interval 600
+serialize_pane_viewport true
+scrollback_lines_to_serialize 1000
+serialization_interval 60
 
 // Web server
 web_server false

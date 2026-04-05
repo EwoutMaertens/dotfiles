@@ -1,3 +1,7 @@
+// TODO: Improve zjstatus styling — customize colors, add nerdfont icons, and match
+// the look of the default zellij bars more closely. See community configs for inspiration:
+// https://github.com/dj95/zjstatus/discussions/44
+
 layout {
   default_tab_template {
     // Top bar: mode + tabs + session/time
