@@ -15,7 +15,6 @@
     kitty
     zsh
     zellij
-    tmux
 
     # CLI tools
     curl

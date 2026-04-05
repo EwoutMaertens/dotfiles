@@ -14,7 +14,7 @@ attach_to_session false
 support_kitty_keyboard_protocol false
 
 // Layout
-default_layout "ewout_layout"
+default_layout "startup_layout"
 //layout_dir "./layouts"
 auto_layout false
 
@@ -60,8 +60,8 @@ serialization_interval 600
 web_server false
 web_server_ip "127.0.0.1"
 web_server_port 8082
-web_server_cert
-web_server_key
+// web_server_cert
+// web_server_key
 web_client false
 enforce_https_on_localhost true
 
@@ -84,12 +84,9 @@ plugins {
     welcome-screen location="zellij:session-manager" {
         welcome_screen true
     }
-}
-
-// Plugins
-load_plugins {
-// eg. "file:/path/to/my-plugin.wasm"
-// eg. "https://example.com/my-plugin.wasm"
+    zjstatus location="https://github.com/dj95/zjstatus/releases/latest/download/zjstatus.wasm"
+    forgot location="https://github.com/karimould/zellij-forgot/releases/latest/download/zellij_forgot.wasm"
+    room location="https://github.com/rvcas/room/releases/latest/download/room.wasm"
 }
 
 // Keybindings
@@ -240,6 +237,18 @@ keybinds clear-defaults=true {
         bind "Alt n" { NewPane; }
         bind "Alt o" { MoveTab "right"; }
         bind "Ctrl q" { Quit; }
+        bind "Alt ?" {
+            LaunchOrFocusPlugin "forgot" {
+                floating true
+                move_to_focused_tab true
+            }
+        }
+        bind "Alt r" {
+            LaunchOrFocusPlugin "room" {
+                floating true
+                move_to_focused_tab true
+            }
+        }
     }
     shared_except "locked" "move" {
         bind "Ctrl h" { SwitchToMode "move"; }
