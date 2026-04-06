@@ -92,7 +92,7 @@ layout {
     pane close_on_exit=true {
         name "home.nix"
         command "zsh"
-        args "-i" "-c" "nvim home-manager/home.nix; exec zsh"
+        args "-i" "-c" "$HOME/.nix-profile/bin/nvim home-manager/home.nix; exec zsh"
     }
     pane split_direction="horizontal" {
       pane close_on_exit=true {

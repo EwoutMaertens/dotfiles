@@ -165,7 +165,7 @@
       source ${dotfiles}/zsh/aliases.zsh
       source ${dotfiles}/zsh/paths.zsh
       source ${dotfiles}/zsh/env_vars.zsh
-      [[ -f ${dotfiles}/zsh/env_vars.local.zsh ]] && source ${dotfiles}/zsh/env_vars.local.zsh
+      [[ -f $HOME/dotfiles/zsh/env_vars.local.zsh ]] && source $HOME/dotfiles/zsh/env_vars.local.zsh
     '';
   };
 }
