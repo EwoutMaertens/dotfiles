@@ -25,7 +25,7 @@ theme "ao" //ao, stopped at everforest-dark
 // Panes
 pane_frames true
 stacked_resize true
-post_command_discovery_hook "bash $HOME/dotfiles/zellij/resurrection-hook.sh"
+post_command_discovery_hook "bash $HOME/dotfiles/zellij/hooks/resurrection-hook.sh"
 // default_cwd
 
 // Mouse

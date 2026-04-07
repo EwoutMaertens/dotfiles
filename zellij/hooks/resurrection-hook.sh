@@ -4,7 +4,7 @@
 # Whatever is sent to STDOUT replaces the serialized command.
 
 cmd="$RESURRECT_COMMAND"
-wrapper="bash $HOME/dotfiles/zellij/run-and-shell.sh"
+wrapper="bash $HOME/dotfiles/zellij/hooks/run-and-shell.sh"
 
 # Replace Nix store nvim paths with plain nvim, strip the wrapper init lua
 if echo "$cmd" | grep -q "nvim"; then

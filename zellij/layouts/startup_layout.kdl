@@ -65,25 +65,25 @@ layout {
         notification_show_interval "10"
 
         // Music (Spotify)
-        command_music_command     "bash /Users/ewoutm/dotfiles/zellij/shell/song.sh"
+        command_music_command     "bash /Users/ewoutm/dotfiles/zellij/statusbar/song.sh"
         command_music_format      "#[fg=$fg]󰝚 {stdout}"
         command_music_interval    "10"
         command_music_rendermode  "static"
 
         // CPU usage
-        command_cpu_command    "bash /Users/ewoutm/dotfiles/zellij/shell/cpu.sh"
+        command_cpu_command    "bash /Users/ewoutm/dotfiles/zellij/statusbar/cpu.sh"
         command_cpu_format     "#[fg=$blue]  {stdout}%"
         command_cpu_interval   "30"
         command_cpu_rendermode "static"
 
         // Memory usage
-        command_memo_command    "bash /Users/ewoutm/dotfiles/zellij/shell/memory.sh"
+        command_memo_command    "bash /Users/ewoutm/dotfiles/zellij/statusbar/memory.sh"
         command_memo_format     "#[fg=$blue] 󰍛 {stdout}"
         command_memo_interval   "30"
         command_memo_rendermode "static"
 
         // Weather
-        command_weather_command     "bash /Users/ewoutm/dotfiles/zellij/shell/weather.sh"
+        command_weather_command     "bash /Users/ewoutm/dotfiles/zellij/statusbar/weather.sh"
         command_weather_format      "#[fg=#f3f4f6]{stdout}"
         command_weather_interval    "3600"
         command_weather_rendermode  "static"
