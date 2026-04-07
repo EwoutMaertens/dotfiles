@@ -1,90 +1,103 @@
-// TODO: Improve zjstatus styling — customize colors, add nerdfont icons, and match
-// the look of the default zellij bars more closely. See community configs for inspiration:
-// https://github.com/dj95/zjstatus/discussions/44
-
 layout {
   default_tab_template {
-    // Top bar: mode + tabs + session/time
+    // Top bar: mode + music | tabs | weather, cpu, memory, datetime
     pane size=1 borderless=true {
       plugin location="zjstatus" {
-        // color aliases
-        color_bg     "#1a1b26"
-        color_fg     "#a9b1d6"
-        color_dim    "#565f89"
-        color_blue   "#7aa2f7"
-        color_green  "#9ece6a"
-        color_yellow "#e0af68"
-        color_red    "#f7768e"
-        color_cyan   "#7dcfff"
+        // Tokyonight color palette
+        color_bg      "#000000"
+        color_bg1     "#24283b"
+        color_bg2     "#414868"
+        color_fg      "#a9b1d6"
+        color_dim     "#565f89"
+        color_blue    "#7aa2f7"
+        color_green   "#9ece6a"
+        color_yellow  "#e0af68"
+        color_red     "#f7768e"
+        color_cyan    "#7dcfff"
         color_magenta "#bb9af7"
-        color_orange "#ff9e64"
+        color_orange  "#ff9e64"
 
-        format_left   "{mode} {tabs}"
-        format_center ""
-        format_right  "#[fg=$dim]{datetime} #[fg=$cyan]  {session} "
+        format_left   "{mode}{tabs}"
+        format_center "{notifications}"
+        format_right  "{command_music} {command_weather} {command_cpu} {command_memo} {datetime}"
         format_space  ""
         format_hide_on_overlength "true"
         format_precedence "lrc"
 
-        mode_normal        "#[bg=$green,fg=$bg,bold]  NORMAL #[fg=$green]"
-        mode_locked        "#[bg=$red,fg=$bg,bold]  LOCKED #[fg=$red]"
-        mode_pane          "#[bg=$blue,fg=$bg,bold]  PANE #[fg=$blue]"
-        mode_tab           "#[bg=$yellow,fg=$bg,bold] 󰓩 TAB #[fg=$yellow]"
-        mode_resize        "#[bg=$orange,fg=$bg,bold] 󰩨 RESIZE #[fg=$orange]"
-        mode_move          "#[bg=$orange,fg=$bg,bold]  MOVE #[fg=$orange]"
-        mode_scroll        "#[bg=$yellow,fg=$bg,bold]  SCROLL #[fg=$yellow]"
-        mode_search        "#[bg=$magenta,fg=$bg,bold]  SEARCH #[fg=$magenta]"
-        mode_session       "#[bg=$cyan,fg=$bg,bold]  SESSION #[fg=$cyan]"
-        mode_tmux          "#[bg=$magenta,fg=$bg,bold]  TMUX #[fg=$magenta]"
-        mode_enter_search  "#[bg=$magenta,fg=$bg,bold]  SEARCH #[fg=$magenta]"
-        mode_rename_tab    "#[bg=$yellow,fg=$bg,bold] 󰏫 RENAME #[fg=$yellow]"
-        mode_rename_pane   "#[bg=$yellow,fg=$bg,bold] 󰏫 RENAME #[fg=$yellow]"
+        border_enabled  "false"
+        border_char     "─"
+        border_format   "#[fg=$bg1]{char}"
+        border_position "top"
 
-        tab_normal              "#[fg=$dim] {index}:{name} "
-        tab_normal_fullscreen   "#[fg=$dim] {index}:{name}  "
-        tab_normal_sync         "#[fg=$dim] {index}:{name}  "
-        tab_active              "#[fg=$blue,bold] {index}:{name} "
-        tab_active_fullscreen   "#[fg=$blue,bold] {index}:{name}  "
-        tab_active_sync         "#[fg=$blue,bold] {index}:{name}  "
+        hide_frame_for_single_pane "true"
+
+        // Mode indicators (powerline style)
+        mode_normal        "#[bg=#acc4e3,fg=$bg]#[bg=#acc4e3,fg=#000000,bold]  NORMAL#[bg=$bg,fg=#acc4e3]"
+        mode_locked        "#[bg=$red,fg=$bg]#[bg=$red,fg=$bg,bold]  LOCKED#[bg=$bg,fg=$red]"
+        mode_pane          "#[bg=$blue,fg=$bg]#[bg=$blue,fg=$bg,bold]  PANE#[bg=$bg,fg=$blue]"
+        mode_tab           "#[bg=$yellow,fg=$bg]#[bg=$yellow,fg=$bg,bold] 󰓩 TAB#[bg=$bg,fg=$yellow]"
+        mode_resize        "#[bg=$orange,fg=$bg]#[bg=$orange,fg=$bg,bold] 󰩨 RESIZE#[bg=$bg,fg=$orange]"
+        mode_move          "#[bg=$orange,fg=$bg]#[bg=$orange,fg=$bg,bold]  MOVE#[bg=$bg,fg=$orange]"
+        mode_scroll        "#[bg=$yellow,fg=$bg]#[bg=$yellow,fg=$bg,bold]  SCROLL#[bg=$bg,fg=$yellow]"
+        mode_search        "#[bg=$magenta,fg=$bg]#[bg=$magenta,fg=$bg,bold]  SEARCH#[bg=$bg,fg=$magenta]"
+        mode_enter_search  "#[bg=$magenta,fg=$bg]#[bg=$magenta,fg=$bg,bold]  SEARCH#[bg=$bg,fg=$magenta]"
+        mode_session       "#[bg=$cyan,fg=$bg]#[bg=$cyan,fg=$bg,bold]  SESSION#[bg=$bg,fg=$cyan]"
+        mode_tmux          "#[bg=$magenta,fg=$bg]#[bg=$magenta,fg=$bg,bold]  TMUX#[bg=$bg,fg=$magenta]"
+        mode_rename_tab    "#[bg=$yellow,fg=$bg]#[bg=$yellow,fg=$bg,bold] 󰏫 RENAME#[bg=$bg,fg=$yellow]"
+        mode_rename_pane   "#[bg=$yellow,fg=$bg]#[bg=$yellow,fg=$bg,bold] 󰏫 RENAME#[bg=$bg,fg=$yellow]"
+
+        // Tab bar (powerline style)
+        tab_normal              "#[bg=$bg2,fg=$bg]#[bg=$bg2,fg=$fg] {index}  #[bg=$bg2,fg=$fg,bold]{name} {floating_indicator}#[bg=$bg,fg=$bg2]"
+        tab_normal_fullscreen   "#[bg=$bg2,fg=$bg]#[bg=$bg2,fg=$fg] {index}  #[bg=$bg2,fg=$fg,bold]{name} {fullscreen_indicator}#[bg=$bg,fg=$bg2]"
+        tab_normal_sync         "#[bg=$bg2,fg=$bg]#[bg=$bg2,fg=$fg] {index}  #[bg=$bg2,fg=$fg,bold]{name} {sync_indicator}#[bg=$bg,fg=$bg2]"
+        tab_active              "#[bg=$blue,fg=$bg]#[bg=$blue,fg=$bg] {index}  #[bg=$blue,fg=$bg,bold]{name} {floating_indicator}#[bg=$bg,fg=$blue]"
+        tab_active_fullscreen   "#[bg=$blue,fg=$bg]#[bg=$blue,fg=$bg] {index}  #[bg=$blue,fg=$bg,bold]{name} {fullscreen_indicator}#[bg=$bg,fg=$blue]"
+        tab_active_sync         "#[bg=$blue,fg=$bg]#[bg=$blue,fg=$bg] {index}  #[bg=$blue,fg=$bg,bold]{name} {sync_indicator}#[bg=$bg,fg=$blue]"
         tab_separator           ""
 
-        tab_sync_indicator       " "
-        tab_fullscreen_indicator " "
-        tab_floating_indicator   "⬚ "
+        tab_sync_indicator       ""
+        tab_fullscreen_indicator "󰊓"
+        tab_floating_indicator   "󰹙"
 
-        datetime          "{format}"
-        datetime_format   "%H:%M %d-%b"
+        // Notifications
+        notification_format_unread "#[bg=$orange,fg=$bg1]#[bg=$orange,fg=$bg] {message} #[bg=$bg,fg=$orange]"
+        notification_format_no_notifications ""
+        notification_show_interval "10"
+
+        // Music (Spotify)
+        command_music_command     "bash /Users/ewoutm/dotfiles/zellij/shell/song.sh"
+        command_music_format      "#[fg=$fg]󰝚 {stdout}"
+        command_music_interval    "10"
+        command_music_rendermode  "static"
+
+        // CPU usage
+        command_cpu_command    "bash /Users/ewoutm/dotfiles/zellij/shell/cpu.sh"
+        command_cpu_format     "#[fg=$blue]  {stdout}%"
+        command_cpu_interval   "30"
+        command_cpu_rendermode "static"
+
+        // Memory usage
+        command_memo_command    "bash /Users/ewoutm/dotfiles/zellij/shell/memory.sh"
+        command_memo_format     "#[fg=$blue] 󰍛 {stdout}"
+        command_memo_interval   "30"
+        command_memo_rendermode "static"
+
+        // Weather
+        command_weather_command     "bash /Users/ewoutm/dotfiles/zellij/shell/weather.sh"
+        command_weather_format      "#[fg=#f3f4f6]{stdout}"
+        command_weather_interval    "3600"
+        command_weather_rendermode  "static"
+
+        // Date & time
+        datetime          "#[fg=#f3f4f6,bold] {format} "
+        datetime_format   "%A, %d %b %Y %H:%M"
         datetime_timezone "Australia/Sydney"
       }
     }
     children
-    // Bottom bar: contextual keybinding hints
+    // Bottom bar: zellij default status bar
     pane size=1 borderless=true {
-      plugin location="zjstatus" {
-        color_bg     "#1a1b26"
-        color_fg     "#a9b1d6"
-        color_dim    "#565f89"
-        color_key    "#7aa2f7"
-
-        format_left   "{mode}"
-        format_center ""
-        format_right  ""
-        format_space  ""
-
-        mode_normal        "#[fg=$key] <C-p>#[fg=$fg] Pane  #[fg=$key]<C-t>#[fg=$fg] Tab  #[fg=$key]<C-n>#[fg=$fg] Resize  #[fg=$key]<C-s>#[fg=$fg] Scroll  #[fg=$key]<C-o>#[fg=$fg] Session  #[fg=$key]<C-h>#[fg=$fg] Move  #[fg=$key]<C-b>#[fg=$fg] Tmux  #[fg=$key]<A-?>#[fg=$fg] Help"
-        mode_locked        "#[fg=$key] <C-g>#[fg=$fg] Unlock"
-        mode_pane          "#[fg=$key] n#[fg=$fg] New  #[fg=$key]r#[fg=$fg] Right  #[fg=$key]d#[fg=$fg] Down  #[fg=$key]x#[fg=$fg] Close  #[fg=$key]f#[fg=$fg] Full  #[fg=$key]w#[fg=$fg] Float  #[fg=$key]hjkl#[fg=$fg] Move  #[fg=$key]Esc#[fg=$fg] Back"
-        mode_tab           "#[fg=$key] n#[fg=$fg] New  #[fg=$key]r#[fg=$fg] Rename  #[fg=$key]x#[fg=$fg] Close  #[fg=$key]1-9#[fg=$fg] GoTo  #[fg=$key]Tab#[fg=$fg] Toggle  #[fg=$key]Esc#[fg=$fg] Back"
-        mode_resize        "#[fg=$key] hjkl#[fg=$fg] Resize  #[fg=$key]+/-#[fg=$fg] Inc/Dec  #[fg=$key]Esc#[fg=$fg] Back"
-        mode_move          "#[fg=$key] hjkl#[fg=$fg] Move  #[fg=$key]n/p#[fg=$fg] Next/Prev  #[fg=$key]Esc#[fg=$fg] Back"
-        mode_scroll        "#[fg=$key] jk#[fg=$fg] Scroll  #[fg=$key]u/d#[fg=$fg] Half Page  #[fg=$key]s#[fg=$fg] Search  #[fg=$key]e#[fg=$fg] Edit  #[fg=$key]Esc#[fg=$fg] Back"
-        mode_search        "#[fg=$key] n/p#[fg=$fg] Next/Prev  #[fg=$key]c#[fg=$fg] Case  #[fg=$key]w#[fg=$fg] Wrap  #[fg=$key]o#[fg=$fg] Whole  #[fg=$key]Esc#[fg=$fg] Back"
-        mode_session       "#[fg=$key] w#[fg=$fg] Manager  #[fg=$key]d#[fg=$fg] Detach  #[fg=$key]p#[fg=$fg] Plugins  #[fg=$key]c#[fg=$fg] Config  #[fg=$key]Esc#[fg=$fg] Back"
-        mode_tmux          "#[fg=$key] c#[fg=$fg] New Tab  #[fg=$key]n/p#[fg=$fg] Next/Prev  #[fg=$key]\"#[fg=$fg] Split H  #[fg=$key]%#[fg=$fg] Split V  #[fg=$key]z#[fg=$fg] Full  #[fg=$key]Esc#[fg=$fg] Back"
-        mode_enter_search  "#[fg=$dim,italic] Type to search...  #[fg=$key]Enter#[fg=$fg] Confirm  #[fg=$key]Esc#[fg=$fg] Cancel"
-        mode_rename_tab    "#[fg=$dim,italic] Type new name...  #[fg=$key]Enter#[fg=$fg] Confirm  #[fg=$key]Esc#[fg=$fg] Cancel"
-        mode_rename_pane   "#[fg=$dim,italic] Type new name...  #[fg=$key]Enter#[fg=$fg] Confirm  #[fg=$key]Esc#[fg=$fg] Cancel"
-      }
+      plugin location="zellij:status-bar"
     }
   }
 
