@@ -29,7 +29,7 @@ layout {
         border_format   "#[fg=$bg1]{char}"
         border_position "top"
 
-        hide_frame_for_single_pane "true"
+        hide_frame_for_single_pane "false"
 
         // Mode indicators (powerline style)
         mode_normal        "#[bg=#acc4e3,fg=$bg]#[bg=#acc4e3,fg=#000000,bold]  NORMAL#[bg=$bg,fg=#acc4e3]"
@@ -73,13 +73,13 @@ layout {
         // CPU usage
         command_cpu_command    "bash /Users/ewoutm/dotfiles/zellij/statusbar/cpu.sh"
         command_cpu_format     "#[fg=$blue]  {stdout}%"
-        command_cpu_interval   "30"
+        command_cpu_interval   "10"
         command_cpu_rendermode "static"
 
         // Memory usage
         command_memo_command    "bash /Users/ewoutm/dotfiles/zellij/statusbar/memory.sh"
         command_memo_format     "#[fg=$blue] 󰍛 {stdout}"
-        command_memo_interval   "30"
+        command_memo_interval   "10"
         command_memo_rendermode "static"
 
         // Weather
@@ -114,25 +114,6 @@ layout {
       pane close_on_exit=true {
           command "zsh"
       }
-    }
-  }
-
-
-  tab name="project-1" split_direction="vertical" cwd="~/Projects/project-1/" {
-    pane close_on_exit=true {
-      command "zsh"
-    }
-    pane close_on_exit=true {
-      command "zsh"
-    }
-  }
-
-  tab name="project-2" split_direction="vertical" cwd="~/Projects/project-2/" {
-    pane close_on_exit=true {
-      command "zsh"
-    }
-    pane close_on_exit=true {
-      command "zsh"
     }
   }
 }
